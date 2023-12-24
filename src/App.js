@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import Movie from './Movie'
 
-function App() {
+const App = () => {
+
+  const [useData , updData] = useState([])
+
+  const fetching = async ()=>{
+    const response = await fetch("https://www.omdbapi.com/?i=tt3896198&apikey=bb4bb264")
+
+    updData([await response.json()]); 
+    
+    
+    }
+  
+
+  useEffect(()=>{
+
+    fetching();
+
+  },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Movie data={useData}/>
+    </>
+  )
 }
 
-export default App;
+export default App
